@@ -1,0 +1,38 @@
+# docker compose up            -> Console on http://localhost:8000
+# docker compose run --rm tests     -> the full unit-test suite
+# docker compose run --rm selftest  -> pipeline self-test (synthetic, not an experiment)
+# docker compose run --rm gate      -> configuration-gate status
+services:
+  console:
+    build: .
+    image: cage:1.0.0
+    container_name: cage-console
+    command: ["python", "-m", "cage_console.server", "--host", "0.0.0.0",
+              "--port", "8000", "--logs", "runs", "--results", "results"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./runs:/app/runs
+      - ./results:/app/results
+    restart: unless-stopped
+
+  tests:
+    build: .
+    image: cage:1.0.0
+    command: ["python", "-m", "pytest", "-q"]
+    profiles: ["dev"]
+
+  selftest:
+    build: .
+    image: cage:1.0.0
+    command: ["python", "scripts/selftest_eval.py"]
+    volumes:
+      - ./runs:/app/runs
+      - ./results:/app/results
+    profiles: ["dev"]
+
+  gate:
+    build: .
+    image: cage:1.0.0
+    command: ["python", "scripts/check_gate.py"]
+    profiles: ["dev"]

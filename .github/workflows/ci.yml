@@ -1,0 +1,99 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: tests (python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install -e .
+
+      - name: Lint
+        run: ruff check cage_guard cage_eval cage_console scripts tests
+
+      - name: Unit tests with coverage (NFR5 gate at 80%)
+        run: |
+          pytest -q --cov=cage_guard --cov=cage_eval --cov=cage_console \
+                 --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+
+      - name: Guard behavioural probes
+        run: python scripts/verify_guard_core.py
+
+      - name: Pipeline self-test (synthetic; not an experiment)
+        run: python scripts/selftest_eval.py
+
+      - name: Regression check - exports must not claim to be a benchmark run
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          p = pathlib.Path("results/selftest/selftest_per_case_results.json")
+          prov = json.loads(p.read_text(encoding="utf-8"))["provenance"]
+          assert prov["is_benchmark_run"] is False, "self-test export claims to be a benchmark run"
+          assert prov["agent"] == ["scripted"], prov["agent"]
+          print("self-test provenance is correctly labelled")
+          PY
+
+      - name: Upload coverage
+        if: matrix.python-version == '3.11'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+
+  gate:
+    name: configuration gate (informational)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install PyYAML
+      - name: Report PENDING gate items
+        continue-on-error: true
+        run: python scripts/check_gate.py
+
+  docker:
+    name: docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t cage:ci .
+      - name: Smoke test the image
+        run: |
+          docker run --rm cage:ci python -m pytest -q
+          docker run --rm cage:ci python scripts/check_gate.py || true
+
+  secrets:
+    name: no secrets committed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if credential files are tracked
+        run: |
+          if git ls-files | grep -E '(^|/)(\.env|.*\.key|.*\.pem)$'; then
+            echo "credential-shaped files are tracked; remove before archival"
+            exit 1
+          fi
+          echo "no credential files tracked"
