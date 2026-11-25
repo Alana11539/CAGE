@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CAGE Console</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header>
+  <h1>CAGE Console</h1>
+  <p class="sub">Composition-Aware Guard Evaluation for Agentic AI &middot;
+     read-only view of the decision logs and CAGE-Eval exports</p>
+  <nav>
+    <button data-view="runs" class="active">Runs</button>
+    <button data-view="timeline">Timeline</button>
+    <button data-view="metrics">Metrics</button>
+    <button data-view="demo">Demo</button>
+  </nav>
+  <p id="health" class="health"></p>
+</header>
+
+<main>
+  <section id="view-runs" class="view">
+    <div class="filters">
+      <label>Condition <select id="filter-condition"><option value="">all</option></select></label>
+      <label>Case <select id="filter-case"><option value="">all</option></select></label>
+    </div>
+    <table id="runs-table">
+      <thead><tr>
+        <th>run</th><th>condition</th><th>case</th><th>seed</th><th>calls</th>
+        <th>allow</th><th>block</th><th>ask</th><th>approved</th><th>denied</th>
+        <th>rules</th><th>fail-closed</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section id="view-timeline" class="view hidden">
+    <div class="filters">
+      <label>Run <select id="timeline-run"></select></label>
+    </div>
+    <div id="timeline"></div>
+    <pre id="decision-detail" class="detail"></pre>
+  </section>
+
+  <section id="view-metrics" class="view hidden">
+    <p class="note">Values are rendered verbatim from the CAGE-Eval export; the
+       Console computes nothing. Every rate is shown as
+       <em>numerator / denominator (percentage)</em> with its 95% Wilson interval.</p>
+    <div id="metrics-provenance"></div>
+    <div id="metrics-tables"></div>
+  </section>
+
+  <section id="view-demo" class="view hidden">
+    <p class="note">The same case with no defense and with the CAGE rules.</p>
+    <div id="demo-pairs"></div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
