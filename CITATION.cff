@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "CAGE: Composition-Aware Guard Evaluation for Agentic AI"
+abstract: >-
+  CAGE is a runtime reference monitor and evaluation harness for tool-calling
+  LLM agents. CAGE-Guard intercepts every proposed tool call and returns
+  allow, block or ask, enforcing a source-to-sink rule, an argument
+  consistency rule that routes delegated sensitive parameters to user
+  confirmation, and a message-body content heuristic. CAGE-Eval runs identical
+  attack and benign cases under four conditions and exports the raw decision
+  logs and metrics; the CAGE Console displays them.
+type: software
+version: "1.0.0"
+license: Apache-2.0
+repository-code: "https://github.com/Alana11539/CAGE"
+url: "https://github.com/Alana11539/CAGE"
+keywords:
+  - LLM agents
+  - indirect prompt injection
+  - runtime enforcement
+  - reference monitor
+  - human-in-the-loop
+  - AgentDojo
+authors:
+  - given-names: "Farkha Alana"
+    family-names: "Gul"
+    affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
+  - given-names: "Marwah"
+    family-names: "Saleh"
+    affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
+  - given-names: "Eman"
+    family-names: "Razzaq"
+    affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
+  - given-names: "Ahmad"
+    family-names: "Mustafa"
+    name-suffix: ""
+    affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
+# The DOI below is minted by Zenodo when the GitHub release v1.0.0 is archived.
+# It must be the Version DOI (not the concept DOI) and is filled in before the
+# manuscript's Data and Code Availability statement cites it.
+# doi: "10.5281/zenodo.PENDING"

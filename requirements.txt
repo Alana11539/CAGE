@@ -1,0 +1,7 @@
+# Runtime dependencies, pinned by minor version for reproducibility (NFR4).
+# The authoritative specification is pyproject.toml; this file exists so that
+# `pip install -r requirements.txt` works in the Docker image and in CI.
+PyYAML>=6.0,<7
+fastapi>=0.110,<1
+uvicorn>=0.27,<1
+pandas>=2.0,<3

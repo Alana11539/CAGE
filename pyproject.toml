@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cage-guard"
+version = "1.0.0"
+description = "CAGE: Composition-Aware Guard Evaluation for Agentic AI - runtime guard, evaluation harness and decision console for tool-calling LLM agents"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "Farkha Alana Gul" },
+  { name = "Marwah Saleh" },
+  { name = "Eman Razzaq" },
+  { name = "Ahmad Mustafa" },
+]
+keywords = ["llm-agents", "prompt-injection", "runtime-enforcement", "agentdojo", "security"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Security",
+]
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[project.scripts]
+cage-console = "cage_console.server:main"
+cage-gate = "scripts.check_gate:main"
+
+[project.optional-dependencies]
+eval = ["pandas>=2.0"]
+console = ["fastapi>=0.110", "uvicorn>=0.27"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "ruff>=0.4"]
+
+[tool.setuptools]
+packages = ["cage_guard", "cage_eval", "cage_console"]
+
+[tool.setuptools.package-data]
+cage_console = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["cage_guard", "cage_eval", "cage_console"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+# NFR5: 80% unit-test coverage target on the guard core.
+fail_under = 80
+
+[tool.ruff]
+# 100 columns is the target; the ceiling is 110 so that a decision reason or a
+# docstring sentence is not broken where the wrap reads worse than the length.
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["B008"]   # FastAPI dependency defaults in signatures
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
