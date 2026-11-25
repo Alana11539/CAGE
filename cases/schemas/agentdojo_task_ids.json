@@ -1,0 +1,115 @@
+{
+  "note": "Task identifiers read from the AgentDojo repository at the commit below. CAGE cases are constructed by the authors against these tasks' environments and schemas; they are not AgentDojo tasks and are never reported as such.",
+  "repository": "https://github.com/ethz-spylab/agentdojo",
+  "commit_read": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+  "retrieved": "2026-11-25",
+  "latest_release_tags": [
+    [
+      "v0.1.35",
+      "a75aba7631d3ca5fb7ab938965c97ead2f9ff84b"
+    ],
+    [
+      "v0.1.34",
+      "928bbae820a89556b03de5cf818eb350cd6082d1"
+    ],
+    [
+      "v0.1.33",
+      "7d8580daa7cced5e52414c6e8d86ca11ef1cc1f0"
+    ],
+    [
+      "v0.1.32",
+      "41a5127fa707c619e620e4eba55d01c569adb63d"
+    ],
+    [
+      "v0.1.31",
+      "9332b9fa7c2cd3c6ff1c2aa3961d55dac12d4f17"
+    ]
+  ],
+  "suites": {
+    "banking": {
+      "user_tasks": [
+        "user_task_0",
+        "user_task_1",
+        "user_task_2",
+        "user_task_3",
+        "user_task_4",
+        "user_task_5",
+        "user_task_6",
+        "user_task_7",
+        "user_task_8",
+        "user_task_9",
+        "user_task_10",
+        "user_task_11",
+        "user_task_12",
+        "user_task_13",
+        "user_task_14",
+        "user_task_15"
+      ],
+      "injection_tasks": [
+        "injection_task_0",
+        "injection_task_1",
+        "injection_task_2",
+        "injection_task_3",
+        "injection_task_4",
+        "injection_task_5",
+        "injection_task_6",
+        "injection_task_7",
+        "injection_task_8"
+      ],
+      "tools": [
+        "get_iban",
+        "send_money",
+        "schedule_transaction",
+        "update_scheduled_transaction",
+        "get_balance",
+        "get_most_recent_transactions",
+        "get_scheduled_transactions",
+        "read_file",
+        "get_user_info",
+        "update_password",
+        "update_user_info"
+      ]
+    },
+    "slack": {
+      "user_tasks": [
+        "user_task_0",
+        "user_task_1",
+        "user_task_2",
+        "user_task_3",
+        "user_task_4",
+        "user_task_5",
+        "user_task_6",
+        "user_task_7",
+        "user_task_8",
+        "user_task_9",
+        "user_task_10",
+        "user_task_11",
+        "user_task_12",
+        "user_task_13",
+        "user_task_14",
+        "user_task_15",
+        "user_task_16"
+      ],
+      "injection_tasks": [
+        "injection_task_1",
+        "injection_task_2",
+        "injection_task_3",
+        "injection_task_4",
+        "injection_task_5"
+      ],
+      "tools": [
+        "get_channels",
+        "add_user_to_channel",
+        "read_channel_messages",
+        "read_inbox",
+        "send_direct_message",
+        "send_channel_message",
+        "get_users_in_channel",
+        "invite_user_to_slack",
+        "remove_user_from_slack",
+        "get_webpage",
+        "post_webpage"
+      ]
+    }
+  }
+}

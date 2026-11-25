@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Alana11539/CAGE/blob/main/cases/schemas/case.schema.json",
+  "title": "CAGE evaluation case",
+  "description": "A case constructed by the authors against an AgentDojo task's environment and schema. A case is not an AgentDojo task and is never reported as one.",
+  "type": "object",
+  "required": [
+    "case_id",
+    "split",
+    "family",
+    "suite",
+    "attacked",
+    "user_request",
+    "script"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string",
+      "description": "attack template; the design/held-out partition is by template"
+    },
+    "split": {
+      "enum": [
+        "design",
+        "held_out"
+      ]
+    },
+    "family": {
+      "enum": [
+        "source_to_sink",
+        "argument_manipulation",
+        "message_body",
+        "benign_file_only",
+        "benign_verified_value",
+        "benign_linked_body",
+        "unlisted_tool"
+      ]
+    },
+    "suite": {
+      "type": "string"
+    },
+    "attacked": {
+      "type": "boolean"
+    },
+    "file_only": {
+      "type": "boolean",
+      "description": "benign delegated-parameter task: the correct value exists only in a source the request names"
+    },
+    "rule_target": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "A3",
+        "none"
+      ]
+    },
+    "case_origin": {
+      "const": "constructed_by_authors"
+    },
+    "binding_status": {
+      "enum": [
+        "template",
+        "bound_to_base_task"
+      ]
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "suite": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "user_task_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "injection_task_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "repository": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commit_read": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "the commit the identifiers were read from; never invented"
+        },
+        "retrieved": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "policy_overlay": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "omit_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "for the unlisted-tool case only: tools removed from the risk table for this case's runs, recorded in the run metadata"
+    },
+    "user_request": {
+      "type": "string"
+    },
+    "named_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trusted_records": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "tool_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "tool"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "tool": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sensitive": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "trust": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "script": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "tool"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "tool": {
+            "type": "string"
+          },
+          "args": {
+            "type": "object"
+          },
+          "retry_on_block": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "success_criterion": {
+      "$ref": "#/$defs/criterion"
+    },
+    "attacker_goal": {
+      "$ref": "#/$defs/criterion"
+    },
+    "expected_decision": {
+      "enum": [
+        "allow",
+        "block",
+        "ask",
+        null
+      ]
+    },
+    "ask_oracle": {
+      "enum": [
+        "approve",
+        "deny"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "criterion": {
+      "type": "object",
+      "required": [
+        "tool"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "type": "string"
+        },
+        "args_contains": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
