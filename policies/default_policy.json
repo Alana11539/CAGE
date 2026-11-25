@@ -1,0 +1,234 @@
+{
+  "version": "cage-policy-1.1.0",
+  "benchmark_provenance": {
+    "note": "Tool names and parameter names below were read from the AgentDojo repository, not inferred. Each suite's TOOLS list and each function signature were taken from the commit recorded here. The commit the experiment pins is a gate item and is recorded separately in config/experiment_config.yaml.",
+    "repository": "https://github.com/ethz-spylab/agentdojo",
+    "commit_read": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+    "retrieved": "2026-11-25",
+    "suites": [
+      "banking",
+      "slack"
+    ],
+    "tools_registered": {
+      "banking": 11,
+      "slack": 11
+    }
+  },
+  "unlisted_tool_risk": "sensitive",
+  "unlisted_tool_unchecked_decision": "ask",
+  "rules_enabled": {
+    "A": true,
+    "B": true,
+    "C": true
+  },
+  "rule_c_decision": "block",
+  "rule_c_sources": [
+    "untrusted"
+  ],
+  "min_value_len": 3,
+  "amount_tolerance": "0.01",
+  "max_denied_retries": 1,
+  "fail_closed_scope": [
+    "low",
+    "sensitive",
+    "unlisted"
+  ],
+  "tools": {
+    "get_iban": {
+      "risk": "low",
+      "description": "banking: the user's own IBAN",
+      "reads_sensitive": true
+    },
+    "get_balance": {
+      "risk": "low",
+      "description": "banking: account balance",
+      "reads_sensitive": true
+    },
+    "get_most_recent_transactions": {
+      "risk": "low",
+      "description": "banking: transaction history",
+      "reads_sensitive": true
+    },
+    "get_scheduled_transactions": {
+      "risk": "low",
+      "description": "banking: scheduled transfers",
+      "reads_sensitive": true
+    },
+    "get_user_info": {
+      "risk": "low",
+      "description": "banking: account holder details",
+      "reads_sensitive": true
+    },
+    "read_file": {
+      "risk": "low",
+      "description": "banking: read a document from the simulated filesystem (untrusted content)",
+      "reads_sensitive": true
+    },
+    "send_money": {
+      "risk": "sensitive",
+      "description": "banking: transfer funds",
+      "state_changing": true,
+      "sensitive_params": [
+        "recipient"
+      ],
+      "destination_params": [
+        "recipient"
+      ],
+      "amount_params": [
+        "amount"
+      ],
+      "body_params": [
+        "subject"
+      ]
+    },
+    "schedule_transaction": {
+      "risk": "sensitive",
+      "description": "banking: schedule a transfer",
+      "state_changing": true,
+      "sensitive_params": [
+        "recipient"
+      ],
+      "destination_params": [
+        "recipient"
+      ],
+      "amount_params": [
+        "amount"
+      ],
+      "body_params": [
+        "subject"
+      ]
+    },
+    "update_scheduled_transaction": {
+      "risk": "sensitive",
+      "description": "banking: amend a scheduled transfer",
+      "state_changing": true,
+      "sensitive_params": [
+        "recipient"
+      ],
+      "destination_params": [
+        "recipient"
+      ],
+      "amount_params": [
+        "amount"
+      ],
+      "body_params": [
+        "subject"
+      ]
+    },
+    "update_user_info": {
+      "risk": "sensitive",
+      "description": "banking: change account holder details",
+      "state_changing": true,
+      "sensitive_params": [
+        "first_name",
+        "last_name",
+        "street",
+        "city"
+      ]
+    },
+    "update_password": {
+      "risk": "sensitive",
+      "description": "banking: change the account password",
+      "state_changing": true,
+      "sensitive_params": [
+        "password"
+      ]
+    },
+    "get_channels": {
+      "risk": "low",
+      "description": "slack: list channels"
+    },
+    "get_users_in_channel": {
+      "risk": "low",
+      "description": "slack: list channel members"
+    },
+    "read_channel_messages": {
+      "risk": "low",
+      "description": "slack: channel history (untrusted content)",
+      "reads_sensitive": true
+    },
+    "read_inbox": {
+      "risk": "low",
+      "description": "slack: a user's direct messages (untrusted content)",
+      "reads_sensitive": true
+    },
+    "get_webpage": {
+      "risk": "low",
+      "description": "slack: fetch a web page (untrusted content)"
+    },
+    "send_direct_message": {
+      "risk": "sensitive",
+      "description": "slack: direct message a user",
+      "state_changing": true,
+      "sensitive_params": [
+        "recipient"
+      ],
+      "destination_params": [
+        "recipient"
+      ],
+      "body_params": [
+        "body"
+      ]
+    },
+    "send_channel_message": {
+      "risk": "sensitive",
+      "description": "slack: post to a channel",
+      "state_changing": true,
+      "sensitive_params": [
+        "channel"
+      ],
+      "destination_params": [
+        "channel"
+      ],
+      "body_params": [
+        "body"
+      ]
+    },
+    "post_webpage": {
+      "risk": "sensitive",
+      "description": "slack: publish content to a URL",
+      "state_changing": true,
+      "sensitive_params": [
+        "url"
+      ],
+      "destination_params": [
+        "url"
+      ],
+      "body_params": [
+        "content"
+      ]
+    },
+    "invite_user_to_slack": {
+      "risk": "sensitive",
+      "description": "slack: invite an external address",
+      "state_changing": true,
+      "sensitive_params": [
+        "user",
+        "user_email"
+      ],
+      "destination_params": [
+        "user_email"
+      ]
+    },
+    "add_user_to_channel": {
+      "risk": "sensitive",
+      "description": "slack: grant a user access to a channel",
+      "state_changing": true,
+      "sensitive_params": [
+        "user",
+        "channel"
+      ],
+      "destination_params": [
+        "channel"
+      ]
+    },
+    "remove_user_from_slack": {
+      "risk": "sensitive",
+      "description": "slack: remove a user from the workspace",
+      "state_changing": true,
+      "sensitive_params": [
+        "user"
+      ]
+    }
+  }
+}
