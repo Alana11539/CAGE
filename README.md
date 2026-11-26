@@ -1,4 +1,5 @@
 # CAGE — Composition-Aware Guard Evaluation for Agentic AI
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24563135.svg)](https://doi.org/10.5281/zenodo.24563135)
 
 A runtime reference monitor and controlled-evaluation harness for tool-calling
 LLM agents. **CAGE-Guard** intercepts every tool call an agent proposes and
