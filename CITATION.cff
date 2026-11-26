@@ -14,6 +14,7 @@ version: "1.0.0"
 license: Apache-2.0
 repository-code: "https://github.com/Alana11539/CAGE"
 url: "https://github.com/Alana11539/CAGE"
+doi: 10.5281/zenodo.24563135
 keywords:
   - LLM agents
   - indirect prompt injection
@@ -33,9 +34,4 @@ authors:
     affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
   - given-names: "Ahmad"
     family-names: "Mustafa"
-    name-suffix: ""
     affiliation: "Department of Software Engineering, Faculty of Computing & Information Technology"
-# The DOI below is minted by Zenodo when the GitHub release v1.0.0 is archived.
-# It must be the Version DOI (not the concept DOI) and is filled in before the
-# manuscript's Data and Code Availability statement cites it.
-# doi: "10.5281/zenodo.PENDING"
